@@ -48,10 +48,10 @@ class ScoresScript():
                                     exec(code, globals(), inputs)
                                     file.write(f"execute if score {player} {objective} matches {j + start} run {inputs.get('out')}\n")
                                 else:
-                                    file.write(f"execute if score {player} {objective} matches {j + start}..{j + size_p - 1 + start} run function {namespace}:{folder}/l{str(l-2)}_i{str(j + start)}\n")
+                                    file.write(f"execute if score {player} {objective} matches {j + start}..{j + size_p - 1 + start} run function {namespace}:{folder}/l{str(l-2)}_{str(j + start)}\n")
                 else:
                     with open(f"{path}/root.mcfunction", "w") as file:
                         for j in range(i,i+size-1,size_p):
                             if(j < n):
-                                file.write(f"execute if score {player} {objective} matches {j + start}..{j + size_p - 1 + start} run function {namespace}:{folder}/l{str(l-2)}_i{str(j + start)}\n") 
+                                file.write(f"execute if score {player} {objective} matches {j + start}..{j + size_p - 1 + start} run function {namespace}:{folder}/l{str(l-2)}_{str(j + start)}\n") 
 
