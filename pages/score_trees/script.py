@@ -31,7 +31,7 @@ class ScoresScript():
         # create folder for tree
         levels = math.floor(math.log(n)/math.log(b)) + 1
         os.makedirs(path, exist_ok=True)
-        for l in range(1,levels):
+        for l in range(1,levels+1):
             size = pow(b,l)
             size_p = pow(b,l-1)
             for i in range(0,size*math.ceil(n / size) - 1, size):
