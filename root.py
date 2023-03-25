@@ -1,4 +1,4 @@
-# Build using "python3.9 -m PyInstaller --noconsole --onefile -i"assets\icon.ico" --collect-data TKinterModernThemes root.py"
+# Build using "PyInstaller --noconsole --onefile -i"assets\icon.ico" --collect-data TKinterModernThemes root.py"
 
 from tkinter import ttk
 import TKinterModernThemes as TKMT

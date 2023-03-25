@@ -2,6 +2,7 @@ import requests
 import json
 import math
 import os
+import ast
 
 class ScoresScript():
     def __init__(self, root):
@@ -10,6 +11,9 @@ class ScoresScript():
     
     def generate(self,page,root):
         code = page.txt_code.get("1.0", "end")
+        # safely evaluate input string (automatic escapes)
+        parsed_code = ast.parse(code)
+        compiled_code = compile(parsed_code, "<string>", "exec")
 
         end = int(page.ent_end.get())
         start = int(page.ent_start.get())
@@ -40,13 +44,15 @@ class ScoresScript():
                         progress += 1
                         page.pb.update(100*progress/progress_max)
                         root.update_idletasks()
-
-                        for j in range(i,i+size-1,size_p):
+                        for j in range(i,i+size,size_p):
                             if(j < n):
                                 if(l==1):
                                     inputs = {'score': int(j + start)}
-                                    exec(code, globals(), inputs)
-                                    file.write(f"execute if score {player} {objective} matches {j + start} run {inputs.get('out')}\n")
+                                    try:
+                                        exec(compiled_code, globals(), inputs)
+                                        file.write(f"execute if score {player} {objective} matches {j + start} run {inputs.get('out')}\n")
+                                    except (SyntaxError, ValueError):
+                                        print('ERROR')
                                 else:
                                     file.write(f"execute if score {player} {objective} matches {j + start}..{j + size_p - 1 + start} run function {namespace}:{folder}/l{str(l-2)}_{str(j + start)}\n")
                 else:
